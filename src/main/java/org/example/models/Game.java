@@ -2,6 +2,8 @@ package org.example.models;
 
 
 import org.example.exception.InvalidGameBuilderException;
+import org.example.strategies.gameWinningStrategy.GameWinningStrategy;
+import org.example.strategies.gameWinningStrategy.OrderOneGameWinningStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,16 @@ public class Game {
     private int nextPlayerIndex;
 
     private Player winner;
+
+    private GameWinningStrategy gameWinningStrategy;
+
+    public GameWinningStrategy getGameWinningStrategy() {
+        return gameWinningStrategy;
+    }
+
+    public void setGameWinningStrategy(GameWinningStrategy gameWinningStrategy) {
+        this.gameWinningStrategy = gameWinningStrategy;
+    }
 
     public Player getWinner() {
         return winner;
@@ -72,6 +84,44 @@ public class Game {
         this.board.display();
     }
 
+    public void makeNextMove(){
+        //which player turn is next?
+        Player playerToMove=players.get(nextPlayerIndex);
+        System.out.println("It is "+playerToMove.getName()+"'turn");
+
+        Move move=playerToMove.decideMove(this.board);
+        //validate the move decided by the player.
+        int row=move.getCell().getRow();
+        int col=move.getCell().getCol();
+
+        System.out.println("Player is making move at ("+row+","+col+")");
+
+        //Assumption: move is valid.
+        board.getBoard().get(row).get(col).setCellState(CellState.FILLED);
+        board.getBoard().get(row).get(col).setPlayer(playerToMove);
+        //Add this move to list of move
+        this.moves.add(move);
+
+        //check the winner
+        if(gameWinningStrategy.checkWinner(board,playerToMove,move.getCell())){
+            this.setGameStatus(GameStatus.ENDED);
+            winner=playerToMove;
+        }
+
+        //check for undo
+
+        //check for DRAW
+
+        //move to next player
+        nextPlayerIndex+=1;
+        nextPlayerIndex%=players.size();
+
+
+
+
+
+    }
+
     public static class Builder{
         private int dimension;
         private List<Player> players;
@@ -117,6 +167,7 @@ public class Game {
             game.setMoves(new ArrayList<>());
             game.setPlayers(players);
             game.setNextPlayerIndex(0);
+            game.setGameWinningStrategy(new OrderOneGameWinningStrategy(dimension));
 
 
             return game;

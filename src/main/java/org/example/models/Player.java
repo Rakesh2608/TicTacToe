@@ -1,11 +1,14 @@
 package org.example.models;
 
 
+import java.util.Scanner;
+
 public class Player {
     private char symbol;
     private String name;
     private PlayerType type;
-    
+
+    Scanner sc=new Scanner(System.in);
     public Player(char symbol,String name,PlayerType type) {
     	this.name=name;
     	this.symbol=symbol;
@@ -34,5 +37,15 @@ public class Player {
 
     public void setType(PlayerType type) {
         this.type = type;
+    }
+
+    public Move decideMove(Board board) {
+        System.out.println("Please enter the row for your move:");
+        int row=sc.nextInt();
+        System.out.println("Please enter the col for your move:");
+        int col=sc.nextInt();
+
+        return new Move(this,new Cell(row,col));
+
     }
 }

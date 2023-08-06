@@ -49,7 +49,27 @@ public class Main {
        // Game game=Game.getBuilder().setDimension(dimension).setPlayers(players).build();
 
         GameController gameController=new GameController();
-        gameController.createGame(dimension,players);
+        Game game=gameController.createGame(dimension,players);
+
+        while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)){
+            System.out.println("This is the current board");
+            gameController.displayBoard(game);
+
+            System.out.println("Do you want to undo y/n");
+
+            String isUndo=sc.next();
+            if(isUndo.equals("y")){
+                gameController.undo(game);
+            }else{
+                gameController.executeNextMove(game);
+            }
+
+        }
+
+        System.out.println("Game has ended !!!");
+        if(game.getGameStatus().equals(GameStatus.ENDED)){
+            System.out.println("Winner is "+gameController.getWinner(game).getName());
+        }
     }
 
 }
