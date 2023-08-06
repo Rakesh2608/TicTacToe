@@ -9,7 +9,7 @@ public class Player {
     private PlayerType type;
 
     Scanner sc=new Scanner(System.in);
-    public Player(char symbol,String name,PlayerType type) {
+    public Player(String name,char symbol,PlayerType type) {
     	this.name=name;
     	this.symbol=symbol;
     	this.type=type;
@@ -38,14 +38,13 @@ public class Player {
     public void setType(PlayerType type) {
         this.type = type;
     }
-
     public Move decideMove(Board board) {
         System.out.println("Please enter the row for your move:");
         int row=sc.nextInt();
         System.out.println("Please enter the col for your move:");
         int col=sc.nextInt();
 
-        return new Move(this,new Cell(row,col));
+        return new Move(this,new Cell(this,row,col,CellState.FILLED));
 
     }
 }

@@ -14,65 +14,47 @@ public class Game {
     private List<Move> moves;
     private GameStatus gameStatus;
     private int nextPlayerIndex;
-
     private Player winner;
-
     private GameWinningStrategy gameWinningStrategy;
-
     public GameWinningStrategy getGameWinningStrategy() {
         return gameWinningStrategy;
     }
-
     public void setGameWinningStrategy(GameWinningStrategy gameWinningStrategy) {
         this.gameWinningStrategy = gameWinningStrategy;
     }
-
     public Player getWinner() {
         return winner;
     }
-
     public void setWinner(Player winner) {
         this.winner = winner;
     }
-
     public Board getBoard() {
         return board;
     }
-
-
-
     public void setBoard(Board board) {
         this.board = board;
     }
-
     public List<Player> getPlayers() {
         return players;
     }
-
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
-
     public List<Move> getMoves() {
         return moves;
     }
-
     public void setMoves(List<Move> moves) {
         this.moves = moves;
     }
-
     public GameStatus getGameStatus() {
         return gameStatus;
     }
-
     public void setGameStatus(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
     }
-
     public int getNextPlayerIndex() {
         return nextPlayerIndex;
     }
-
     public void setNextPlayerIndex(int nextPlayerIndex) {
         this.nextPlayerIndex = nextPlayerIndex;
     }
@@ -87,7 +69,7 @@ public class Game {
     public void makeNextMove(){
         //which player turn is next?
         Player playerToMove=players.get(nextPlayerIndex);
-        System.out.println("It is "+playerToMove.getName()+"'turn");
+        System.out.println("It is "+playerToMove.getName()+"'s turn");
 
         Move move=playerToMove.decideMove(this.board);
         //validate the move decided by the player.
@@ -115,42 +97,30 @@ public class Game {
         //move to next player
         nextPlayerIndex+=1;
         nextPlayerIndex%=players.size();
-
-
-
-
-
     }
 
     public static class Builder{
         private int dimension;
         private List<Player> players;
-
         public int getDimension() {
             return dimension;
         }
-
         public Builder setDimension(int dimension) {
             this.dimension = dimension;
             return this;
         }
-
         public List<Player> getPlayers() {
             return players;
         }
-
-
-
         public Builder setPlayers(List<Player> players) {
             this.players = players;
             return this;
         }
-
         public boolean isValid() throws InvalidGameBuilderException {
             if(this.dimension<3){
                 throw new InvalidGameBuilderException("Invalid dimension given");
             }
-            if(this.players.size()<this.dimension){
+            if(this.players.size()!=this.dimension-1){
                 throw new InvalidGameBuilderException("Invalid Player Inputs given");
             }
 
@@ -164,12 +134,10 @@ public class Game {
             Game game=new Game();
             game.setBoard(new Board(dimension));
             game.setGameStatus(GameStatus.IN_PROGRESS);
-            game.setMoves(new ArrayList<>());
             game.setPlayers(players);
+            game.setMoves(new ArrayList<>());
             game.setNextPlayerIndex(0);
             game.setGameWinningStrategy(new OrderOneGameWinningStrategy(dimension));
-
-
             return game;
 
         }

@@ -9,7 +9,10 @@ import java.util.List;
 public class GameController {
     public Game createGame(int dimension, List<Player> players){
         try {
-            return Game.getBuilder().setDimension(dimension).setPlayers(players).build();
+            return Game.getBuilder()
+                    .setDimension(dimension)
+                    .setPlayers(players)
+                    .build();
         }
         catch (Exception ex){
             return null;

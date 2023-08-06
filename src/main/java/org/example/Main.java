@@ -20,10 +20,10 @@ public class Main {
 
         List<Player> players=new ArrayList<>();
 
-        int numberOfPlayers=dimension-1;
+        //int numberOfPlayers=dimension-1;
         int numberOfHumanPlayers=dimension-1;
         if(isBot.equals("y")){
-            numberOfHumanPlayers=numberOfPlayers-1;
+            numberOfHumanPlayers=numberOfHumanPlayers-1;
             System.out.println("What is the name of BOT");
             String botName=sc.next();
 
@@ -41,8 +41,7 @@ public class Main {
             System.out.println("Enter the Symbol of Human Player:"+(i+1));
             String humanSymbol=sc.next();;
 
-
-            players.add(new Player(humanSymbol.charAt(0),humanName, PlayerType.HUMAN));
+            players.add(new Player(humanName,humanSymbol.charAt(0), PlayerType.HUMAN));
 
         }
 
@@ -52,7 +51,7 @@ public class Main {
         Game game=gameController.createGame(dimension,players);
 
         while(game.getGameStatus().equals(GameStatus.IN_PROGRESS)){
-            System.out.println("This is the current board");
+            System.out.println("This is the current board: ");
             gameController.displayBoard(game);
 
             System.out.println("Do you want to undo y/n");
@@ -66,6 +65,7 @@ public class Main {
 
         }
 
+        //someone has won the game or draw
         System.out.println("Game has ended !!!");
         if(game.getGameStatus().equals(GameStatus.ENDED)){
             System.out.println("Winner is "+gameController.getWinner(game).getName());
