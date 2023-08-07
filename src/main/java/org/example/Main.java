@@ -27,8 +27,11 @@ public class Main {
             System.out.println("What is the name of BOT");
             String botName=sc.next();
 
-            System.out.println("What is the symbol of BOt");
+            System.out.println("What is the symbol of BOT");
             String botSymbol=sc.next();
+
+            //System.out.println("Enter the bot difficulty Level");
+            //String difficultyLevel=sc.next();
 
             players.add(new Bot(botSymbol.charAt(0),botName, BotDifficultyLevel.EASY));
 
@@ -66,6 +69,7 @@ public class Main {
         }
 
         //someone has won the game or draw
+        gameController.displayBoard(game);
         System.out.println("Game has ended !!!");
         if(game.getGameStatus().equals(GameStatus.ENDED)){
             System.out.println("Winner is "+gameController.getWinner(game).getName());

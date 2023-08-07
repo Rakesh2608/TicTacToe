@@ -19,7 +19,6 @@ public class OrderOneGameWinningStrategy implements GameWinningStrategy{
         for(int i=0;i<dimension;i++){
             rowCount.add(new HashMap<>());
             colCount.add(new HashMap<>());
-
         }
     }
     private boolean isCellTopRightDiagonal(int row,int col,int dimension){
@@ -32,7 +31,7 @@ public class OrderOneGameWinningStrategy implements GameWinningStrategy{
     @Override
     public boolean checkWinner(Board board, Player playerToMove, Cell cell) {
 
-    char symbol=playerToMove.getSymbol();
+    char symbol=cell.getPlayer().getSymbol();
     int row=cell.getRow();
     int col=cell.getCol();
     int dimension=board.getBoard().size();
@@ -58,7 +57,7 @@ public class OrderOneGameWinningStrategy implements GameWinningStrategy{
     }
 
     //topLeftDiagonal
-    if(isCellTopRightDiagonal(row,col,dimension)){
+    if(isCellTopLeftDiagonal(row,col)){
             if(!topLeftDiagonal.containsKey(symbol)){
                 topLeftDiagonal.put(symbol,0);
             }
@@ -75,8 +74,6 @@ public class OrderOneGameWinningStrategy implements GameWinningStrategy{
     if(isCellTopLeftDiagonal(row,col)&&topLeftDiagonal.get(symbol)==dimension){
         return true;
     }
-
-
         return false;
     }
 }

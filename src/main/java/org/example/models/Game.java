@@ -71,6 +71,7 @@ public class Game {
         Player playerToMove=players.get(nextPlayerIndex);
         System.out.println("It is "+playerToMove.getName()+"'s turn");
 
+        System.out.println(playerToMove.getName());
         Move move=playerToMove.decideMove(this.board);
         //validate the move decided by the player.
         int row=move.getCell().getRow();
